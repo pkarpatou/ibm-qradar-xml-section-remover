@@ -184,7 +184,7 @@ class XMLSectionRemover(ttk.Frame):
         bottom.pack(side="bottom", fill="x", padx=12, pady=12)
         self.status_var = tk.StringVar(value="")
         ttk.Label(bottom, textvariable=self.status_var).pack(side="left")
-        ttk.Button(bottom, text="Remove selected and Save as…", command=self.save_modified).pack(side="right")
+        ttk.Button(bottom, text="Remove and Save", command=self.save_modified).pack(side="right")
 
     # ---------- File Operations ----------
     
