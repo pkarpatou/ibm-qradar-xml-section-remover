@@ -32,7 +32,7 @@ python ibm_qradar_xml_section_remover.py
 ## Context of Use
 This utility was developed to streamline XML content maintenance and preparation when working with multiple QRadar instances, particularly in scenarios involving mass content migration or synchronization.  
 
-While IBM QRadar does not officially support direct XML-based content transfer, such tasks are occasionally necessary. This tool assists by providing a controlled and auditable method for XML cleanup. It is intended for experienced QRadar administrators who understand their environment and validate all modifications before use in production.
+While XML modification is not endorsed by IBM, such tasks are occasionally necessary. This tool assists by providing a controlled and auditable method for XML cleanup. It is intended for experienced QRadar administrators who understand their environment and validate all modifications before use in production.
 
 ## Important Notice
 This project is an independent, community-developed tool created for professional and educational use. It is not affiliated with, endorsed by, or supported by IBM.  
