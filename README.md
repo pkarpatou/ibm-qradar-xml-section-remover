@@ -34,6 +34,8 @@ This utility was developed to streamline XML content maintenance and preparation
 
 While XML modification is not endorsed by IBM, such tasks are occasionally necessary. This tool assists by providing a controlled and auditable method for XML cleanup. It is intended for experienced QRadar administrators who understand their environment and validate all modifications before use in production.
 
+Although the tool was inspired by the challenges of managing QRadar configuration files, it is designed to work with any XML file, making it useful for a wide range of XML cleanup and restructuring tasks.
+
 ## Important Notice
 This project is an independent, community-developed tool created for professional and educational use. It is not affiliated with, endorsed by, or supported by IBM.  
 
