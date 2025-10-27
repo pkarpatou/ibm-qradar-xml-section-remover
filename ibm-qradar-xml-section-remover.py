@@ -33,29 +33,6 @@ from tkinter import ttk, filedialog, messagebox
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-COMMON_SECTION_TAGS = {
-    "ariel_property_expression",
-    "ariel_regex_property",
-    "content_version",
-    "device_ext",
-    "dsmevent",
-    "fgroup",
-    "fgroup_link",
-    "fgroup_type",
-    "offense_type",
-    "qidmap",
-    "qradarversion",
-    "reference_data",
-    "reference_data_rules",
-    "sensordevice",
-    "sensordevicecategory",
-    "sensordeviceprotocols",
-    "sensordevicetype",
-    "sensorprotocol",
-    "sensorprotocolconfig",
-    "sensorprotocolconfigparameters",
-}
-
 # --------------------- XML Helpers ---------------------
 
 def localname(tag: str) -> str:
@@ -235,11 +212,8 @@ class XMLSectionRemover(ttk.Frame):
         for w in list(self.chk_frame.children.values()):
             w.destroy()
         self.checkbox_vars.clear()
-
-        # Ensure common tags are present in the list
-        all_tags = set(tags) | COMMON_SECTION_TAGS
-        for name in sorted(all_tags):
-            var = tk.BooleanVar(value=(name in COMMON_SECTION_TAGS))
+        for name in sorted(tags):
+            var = tk.BooleanVar(value=False)  # start UNCHECKED
             cb = ttk.Checkbutton(self.chk_frame, text=name, variable=var)
             cb.pack(anchor="w", pady=2)
             self.checkbox_vars[name] = var
