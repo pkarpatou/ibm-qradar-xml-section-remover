@@ -33,6 +33,27 @@ from tkinter import ttk, filedialog, messagebox
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
+# --------------------- DPI / Window Size Helpers ---------------------
+
+def set_fixed_initial_size(root, width=900, height=650):
+    """Open window at the same pixel size on all OSes, centered; allow resizing."""
+    # Improve DPI behavior on Windows so WxH is interpreted as real pixels
+    try:
+        if sys.platform.startswith("win"):
+            from ctypes import windll
+            # Per-monitor DPI aware (Windows 8.1+)
+            windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass
+
+    root.update_idletasks()
+    sw = root.winfo_screenwidth()
+    sh = root.winfo_screenheight()
+    x = (sw - width) // 2
+    y = (sh - height) // 2
+    root.geometry(f"{width}x{height}+{x}+{y}")
+    root.resizable(True, True)
+
 # --------------------- XML Helpers ---------------------
 
 def localname(tag: str) -> str:
@@ -132,7 +153,7 @@ class XMLSectionRemover(ttk.Frame):
         ttk.Button(toolbar, text="Add Custom Tag", command=self.add_custom_tag_dialog).pack(side="left")
 
         # Any-depth toggle
-        depth_box = ttk.Checkbutton(toolbar, text="Remove at any depth (not just top-level)", variable=self.any_depth_var)
+        depth_box = ttk.Checkbutton(toolbar, text="Remove at Any Depth", variable=self.any_depth_var)
         depth_box.pack(side="right")
 
         # File info
@@ -296,7 +317,7 @@ class XMLSectionRemover(ttk.Frame):
             messagebox.showerror("Error", f"Failed to write file:\n{e}")
             return
 
-        # Report
+        # Report: popup shows full details; status bar shows only "Saved: <file>"
         detail_lines = [f"Saved: {os.path.basename(out_path)}"]
         if removed:
             total_removed = sum(removed.values())
@@ -305,7 +326,11 @@ class XMLSectionRemover(ttk.Frame):
                 detail_lines.append(f"  • {tag}: {cnt}")
         else:
             detail_lines.append("No matching sections were found to remove.")
-        self.status_var.set(" | ".join(detail_lines))
+
+        # Bottom status: only the filename
+        self.status_var.set(f"Saved: {os.path.basename(out_path)}")
+
+        # Popup: full report
         messagebox.showinfo("Done", "\n".join(detail_lines))
 
 def main():
@@ -319,6 +344,14 @@ def main():
         pass
     app = XMLSectionRemover(root)
     app.mainloop()
+    
+# --------------------- Application Entry ---------------------
+
+def main():
+    root = tk.Tk()
+    set_fixed_initial_size(root, width=900, height=650)
+    app = XMLSectionRemover(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
